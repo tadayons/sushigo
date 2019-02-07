@@ -16,7 +16,7 @@ class TestTable < Test::Unit::TestCase
             end
         end
 
-        (2..5).each do |x|
+        (2..5).each do |x| # test that player obj are added to @players array correctly
             table = Table.new(x, @names)
             assert_equal(x, table.players.length)
             assert_equal(@names[x-2], table.players[x-2].name)
@@ -59,11 +59,5 @@ class TestTable < Test::Unit::TestCase
 
             assert_equal(@before, @after)
         end
-
-
-        
     end
-
-
-
 end

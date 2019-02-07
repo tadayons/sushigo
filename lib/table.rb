@@ -38,15 +38,15 @@ class Table
     end
 
     def pass() # will pass the active hands to the new player
-        @a = @players[0].active # p2 hand
+        @a = @players[0].active # p1 hand
         
         (0...@players.length-1).each do |x|
-            b = @players[x + 1].active # p3 hand
-            @players[x + 1].active = @a # setting p3 hand equal to p2 hand
-            @a = b # moving p3 hand to var a
+            b = @players[x + 1].active # p2 hand
+            @players[x + 1].active = @a # setting p2 hand to be what p1's hand was
+            @a = b # moving p2 hand to var a and the cycle continues
         end
 
-        @players[0].active = @a
+        @players[0].active = @a # take the final hand and set it to p1's hands
        
     end
 end
