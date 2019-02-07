@@ -27,7 +27,75 @@ class TestHand < Test::Unit::TestCase
 
         result = [:tempura, :sashimi, :dumplings, :maki, :maki, :maki, :pudding, :chopsticks]
         
-        assert_equal([18, result], [score, get_type(wasabi)]) #get_type(nigiri), not nigiri.get_type bc get_type not a hand method
+        assert_equal([18, result], [score, get_type(wasabi)]) 
+
+        nowasabi = Hand.new("nowasabi")
+        nowasabi.cards = [
+            Card.new(:tempura, 2.5, :tempura), 
+            Card.new(:tempura, 2.5, :tempura),
+            Card.new(:nigiri, 2, :salmon),
+            Card.new(:tempura, 2.5, :tempura),
+            Card.new(:sashimi, 3.33, :sashimi),
+            Card.new(:dumplings, nil, :dumplings),
+            Card.new(:maki, 2, :twomaki),
+            Card.new(:maki, 3, :threemaki),
+            Card.new(:maki, 1, :onemaki),
+            Card.new(:tempura, 2.5, :tempura),
+            Card.new(:nigiri, 3, :squid),
+            Card.new(:nigiri, 1, :egg),
+            Card.new(:pudding, nil, :pudding),
+            Card.new(:chopsticks, nil, :chopsticks),
+        ]
+        
+        (score, cards) = nowasabi.wasabi()
+
+        result = [:tempura, :tempura, :nigiri, :tempura, :sashimi, :dumplings, :maki, :maki, 
+                  :maki, :tempura, :nigiri, :nigiri, :pudding, :chopsticks]
+        
+        assert_equal([0, result], [score, get_type(nowasabi)]) 
+
+        allwasabi = Hand.new("allwasabi")
+        allwasabi.cards = [
+            Card.new(:wasabi, nil, :wasabi), 
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:wasabi, nil, :wasabi),
+        ]
+        (score, cards) = allwasabi.wasabi()
+
+        result = []
+        
+        assert_equal([0, result], [score, get_type(allwasabi)]) 
+
+        twowasabi = Hand.new("twowasabi")
+        twowasabi.cards = [
+            Card.new(:tempura, 2.5, :tempura), 
+            Card.new(:wasabi, nil, :wasabi), # two wasabi next to each other
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:sashimi, 3.33, :sashimi),
+            Card.new(:dumplings, nil, :dumplings),
+            Card.new(:maki, 2, :twomaki),
+            Card.new(:maki, 3, :threemaki),
+            Card.new(:maki, 1, :onemaki),
+            Card.new(:wasabi, nil, :wasabi),
+            Card.new(:nigiri, 3, :squid),
+            Card.new(:nigiri, 1, :egg),
+            Card.new(:pudding, nil, :pudding),
+            Card.new(:chopsticks, nil, :chopsticks),
+        ]
+        
+        (score, cards) = twowasabi.wasabi()
+
+        result = [:tempura, :sashimi, :dumplings, :maki, :maki, :maki,
+                  :pudding, :chopsticks]
+        
+        assert_equal([12, result], [score, get_type(twowasabi)]) 
     end
     
         
